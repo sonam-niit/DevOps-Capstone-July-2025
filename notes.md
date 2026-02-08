@@ -66,3 +66,50 @@ aws dynamodb create-table \
 4. Create pipeline for executing Terraform Code
 
 - terraform.yml
+
+- set Repository Secrets: repo-> settings --> actions -> repo secrest
+
+![Repository Secrets](images/repo-secrets.png)
+
+- once pipeline executes copy the presigned URL and update index.html code as shown here
+
+![Presigned URL](images/presignedURl.png)
+
+![update index.html](images/update-index.png)
+
+- once HTML code updated then upload it to your frontend Bucket
+
+![Upload index.html](images/bucket-upload.png)
+
+- Copy Cloud Front URL and access it in browser
+
+![CloudFront CDN output](images/cloufront-url.png)
+
+- try to submit the form and you can see cors error
+
+![CORS POLICY ERROR](images/cors-error.png)
+
+[Policy Reference](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ManageCorsUsing.html)
+
+- bucket (upload bucket) --> Permissions -> CORS policy - add below code
+
+```json
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE",
+            "HEAD"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": []
+    }
+]
+```
