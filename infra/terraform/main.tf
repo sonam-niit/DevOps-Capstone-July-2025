@@ -8,7 +8,6 @@ terraform {
     dynamodb_table = "devops-accelerator-tf-locker"
     encrypt        = true
   }
-  # Remote Backend
 }
 
 provider "aws" {
@@ -39,7 +38,6 @@ resource "aws_iam_role" "lambda_exec_role" {
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role       = aws_iam_role.lambda_exec_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  # inbuilt ARN available for Policy
 }
 
 resource "aws_iam_role_policy_attachment" "s3_access" {
@@ -64,8 +62,8 @@ resource "aws_lambda_function" "process_uploaded_file" {
   function_name = "process-uploaded-file"
   runtime       = "python3.11"
   handler       = "main.lambda_handler"
-  filename      = "${path.module}/../../backend/process-uploaded-file/lambda.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../backend/process-uploaded-file/lambda.zip")
+  filename      = "${path.module}/../../backend/lambda/process-uploaded-file/lambda.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../backend/lambda/process-uploaded-file/lambda.zip")
   role = aws_iam_role.lambda_exec_role.arn
 
   environment {
@@ -268,8 +266,8 @@ resource "aws_lambda_function" "presign_lambda" {
   role          = aws_iam_role.presign_lambda_role.arn
   handler       = "main.lambda_handler"
   runtime       = "python3.12"
-  filename      = "${path.module}/../../backend/generate-presigned-url/lambda.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../backend/generate-presigned-url/lambda.zip")
+  filename      = "${path.module}/../../backend/lambda/generate-presigned-url/lambda.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../backend/lambda/generate-presigned-url/lambda.zip")
 
   environment {
     variables = {
