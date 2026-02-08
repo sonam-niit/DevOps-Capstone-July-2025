@@ -42,12 +42,12 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
 
-      - name: Terraform Apply
-        env:
-          GZIP: "false"
-        run: terraform apply -auto-approve
-
-      # - name: Terraform Destroy
+      # - name: Terraform Apply
       #   env:
       #     GZIP: "false"
-      #   run: terraform destroy -auto-approve
+      #   run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        env:
+          GZIP: "false"
+        run: terraform destroy -auto-approve

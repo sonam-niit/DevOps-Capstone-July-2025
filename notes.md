@@ -62,6 +62,19 @@ aws dynamodb create-table \
 --billing-mode PAY_PER_REQUEST \
 --region us-east-1
 ```
+4. Create Pipeline for Frontend and Backend Code Deploy
+
+- backend.yml
+- frontend.yml
+
+### Repository Secrets
+
+- AWS_ACCESS_KEY_ID: Your ACCESS KEY
+- AWS_SECRET_ACCESS_KEY: YOUR SECRET ACCESS KEY
+- AWS_REGION: us-east-1
+- LAMBDA_FUNCTION_NAME: process-uploaded-file
+- FRONTEND_BUCKET_NAME: devops-accelerator-frontend-hosting-bucket
+- UPLOAD_BUCKET_NAME: devops-accelerator-upload-bucket
 
 4. Create pipeline for executing Terraform Code
 
@@ -113,3 +126,23 @@ aws dynamodb create-table \
     }
 ]
 ```
+
+**If still you are gettin getting Error**
+
+- AWS Console --> APIs -
+    - select API for DevOps-Accelerator-Presign-API
+    - Left Panel --> Protect --> Throtlling
+    - Edit Default Stage:
+        - Burst limit: 100
+        - Rate Limit: 200
+        - Save
+
+- check your email as well and confirm subscription
+
+ ## you can see upload
+
+ ![Upload Success](images/upload-success.png)
+
+ - Also, check email once upload doe successfull
+ - check Cloud Watch for Logs
+ - Check S3 bucket to see the uploads
