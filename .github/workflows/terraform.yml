@@ -39,8 +39,8 @@ jobs:
         run: terraform init -reconfigure
 
 
-      - name: Terraform Plan
-        run: terraform plan
+      # - name: Terraform Plan
+      #   run: terraform plan
 
       # - name: Terraform Apply
       #   env:
