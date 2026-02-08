@@ -31,3 +31,38 @@
 - attached 2 policies
     + AWSLambdaBasicExecutionRole
     + AmazonS3FullAccess
+
+**When you implement change bucket name as per your requirement**
+
+1. Create Zip files for Lambda
+
+```bash
+cd backend/generate-presigned-url
+zip -r lambda.zip .
+
+cd backend/process-uploaded-file
+zip -r lambda.zip .
+```
+
+2. Create Bucket For Remote Backend
+
+```bash
+aws s3api create-bucket \
+--bucket devops-accelerator-platform-tf-state-sonam \
+--region us-east-1
+```
+
+3. DynamoDB Table for Locking
+
+```bash
+aws dynamodb create-table \
+--table-name devops-accelerator-tf-locker \
+--attribute-definitions AttributeName=LockID,AttributeType=S \
+--key-schema AttributeName=LockID,KeyType=HASH \
+--billing-mode PAY_PER_REQUEST \
+--region us-east-1
+```
+
+4. Create pipeline for executing Terraform Code
+
+- terraform.yml
